@@ -17,8 +17,8 @@ class NoteFactory extends Factory
     public function definition()
     {
         return [
-            "user_id" => 1, 
-            "content" => fake()->sentence()
+            'user_id' => 1,
+            'content' => fake()->sentence(),
         ];
     }
 }

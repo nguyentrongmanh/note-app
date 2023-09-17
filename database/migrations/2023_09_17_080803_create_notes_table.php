@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("user_id");
-            $table->text("content");
+            $table->bigInteger('user_id');
+            $table->text('content');
             $table->timestamps();
         });
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Services\NoteServiceInterface;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
-use App\Core\Services\NoteServiceInterface;
 use Illuminate\Http\Request;
 use Log;
 
@@ -13,7 +13,8 @@ class NoteController extends Controller
 {
     protected NoteServiceInterface $_noteService;
 
-    public function __construct(NoteServiceInterface $noteService) {
+    public function __construct(NoteServiceInterface $noteService)
+    {
         $this->_noteService = $noteService;
     }
 
@@ -24,10 +25,11 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        $note = $this->_noteService->searchByContent($request->content ?? "");
+        $note = $this->_noteService->searchByContent($request->content ?? '');
         Log::info($note);
-        return view("note.index", [
-            "notes" => $this->_noteService->searchByContent($request->content ?? "")
+
+        return view('note.index', [
+            'notes' => $this->_noteService->searchByContent($request->content ?? ''),
         ]);
     }
 
@@ -38,23 +40,24 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return view("note.create");
+        return view('note.create');
         //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreNoteRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreNoteRequest $request)
     {
         try {
             $this->_noteService->store($request->all());
+
             return redirect()->route('note.index')->withSuccess('A new note created successfully');
         } catch (\Exception $e) {
             Log::info($e);
+
             return redirect()->route('note.index')->withError('An error occurred');
         }
     }
@@ -62,7 +65,6 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function show(Note $note)
@@ -73,7 +75,6 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function edit(Note $note)
@@ -84,8 +85,6 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateNoteRequest  $request
-     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateNoteRequest $request, Note $note)
@@ -96,16 +95,17 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function destroy(Note $note)
     {
         try {
             $this->_noteService->destroy($note->id);
+
             return redirect()->route('note.index')->withSuccess('Delete note successfully');
         } catch (\Exception $e) {
             Log::info($e);
+
             return redirect()->route('note.index')->withError('An error occurred');
         }
     }

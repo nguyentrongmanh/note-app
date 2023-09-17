@@ -13,26 +13,31 @@ class NoteRepository implements NoteRepositoryInterface
         $this->model = $model;
     }
 
-    public function searchByContent($search) {
-        return $this->model->where('content', "like", "%$search%")->paginate(12);
+    public function searchByContent($search)
+    {
+        return $this->model->where('content', 'like', "%$search%")->orderBy('created_at', 'DESC')->paginate(12);
     }
 
-    public function find($id) {
+    public function find($id)
+    {
         return $this->model->findOrFail($id);
     }
 
-    public function store($data) {
+    public function store($data)
+    {
         return $this->model->create($data);
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         $note = $this->note->find($id);
-        if($note) {
+        if ($note) {
             return $note->update($data);
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         return $this->model->destroy($id);
     }
 }
