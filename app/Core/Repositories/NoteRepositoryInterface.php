@@ -4,7 +4,7 @@ namespace App\Core\Repositories;
 
 interface NoteRepositoryInterface
 {
-    public function searchByContent(str $search);
+    public function searchByContentAndUid(str $search, int $userId);
 
     public function find($id);
 

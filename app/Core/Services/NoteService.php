@@ -16,7 +16,7 @@ class NoteService implements NoteServiceInterface
 
     public function searchByContent($search)
     {
-        return $this->repository->searchByContent($search);
+        return $this->repository->searchByContentAndUid($search, Auth::user()->id);
     }
 
     public function find($id)

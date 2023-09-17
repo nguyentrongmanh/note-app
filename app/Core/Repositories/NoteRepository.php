@@ -13,9 +13,11 @@ class NoteRepository implements NoteRepositoryInterface
         $this->model = $model;
     }
 
-    public function searchByContent($search)
+    public function searchByContentAndUid($search, $userId)
     {
-        return $this->model->where('content', 'like', "%$search%")->orderBy('created_at', 'DESC')->paginate(12);
+        return $this->model->where('content', 'like', "%$search%")->orderBy('created_at', 'DESC')
+            ->where("user_id", $userId)
+            ->paginate(12);
     }
 
     public function find($id)
