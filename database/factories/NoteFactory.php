@@ -19,6 +19,7 @@ class NoteFactory extends Factory
         return [
             'user_id' => 1,
             'content' => fake()->sentence(),
+            'created_at' => fake()->dateTimeBetween('-1 month', 'now')
         ];
     }
 }

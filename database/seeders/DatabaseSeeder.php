@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()
             ->has(Note::factory()->count(50))
-            ->create();
+            ->create([
+                'name' => 'Test User',
+                'email' => 'test_account@example.com',
+            ]);
     }
 }
